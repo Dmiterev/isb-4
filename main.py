@@ -4,6 +4,7 @@ import logging
 import json
 from enumeration import enumerate_number
 from stats import visualize_stats
+from luhn import luhn_check
 
 logger = logging.getLogger()
 logger.setLevel('INFO')
@@ -45,6 +46,7 @@ if __name__ == '__main__':
     group.add_argument('-enu', '--enumeration', type=int,
                        help='Определение номера карты с помощью хэша. Указать количество процессов')
     group.add_argument('-sts', '--stats', help='Визуализация статистики')
+    group.add_argument('-lun', '--luhn_algorithm', help='Проверка валидности номера карты с помощью алгоритма Луна')
     args = parser.parse_args()
     if args.settings:
         settings = read_settings(args.settings)
@@ -52,18 +54,17 @@ if __name__ == '__main__':
         settings = read_settings(os.path.join("data", "settings.json"))
     if settings:
         if args.enumeration:
-            hash = settings["hash"]
-            bin = settings["bin"]
-            last_numbers = settings["last_numbers"]
-            card_number = enumerate_number(hash, bin, last_numbers, args.enumeration)
+            card_number = enumerate_number(settings["hash"], settings["bin"], settings["last_numbers"], args.enumeration)
             if card_number:
                 logging.info(f"Полученный номер карты: {card_number}")
                 write_in_file(settings["card_number"], card_number)
             else:
                 logging.info("Номер карты не найден!")
         elif args.stats:
-            hash = settings["hash"]
-            bin = settings["bin"]
-            last_numbers = settings["last_numbers"]
-            visualize_stats(hash, bin, last_numbers, settings["stats"])
+            visualize_stats(settings["hash"], settings["bin"], settings["last_numbers"], settings["stats"])
             logging.info('Гистограмма построена')
+        elif args.luhn_algorithm:
+            if luhn_check(settings["card_number"]):
+                logging.info('Номер карты корректный!')
+            else:
+                logging.info('Номер карты не некорректный!')
