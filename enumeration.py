@@ -5,7 +5,7 @@ from tqdm import tqdm
 
 def enumerate_number(hash: str, bin: str, last_numbers: str, core_number: int = mp.cpu_count()):
     """
-    Подбор номера карты.
+    Подбор номера карты c помощью хэша.
     :param hash: Хэш карты.
     :param bin: БИН номер карты.
     :param last_numbers: Последние 4 цифры карты.

@@ -42,7 +42,7 @@ if __name__ == '__main__':
                         help='Использовать собственный файл c настройками. Указать путь к файлу')
     group = parser.add_mutually_exclusive_group(required=True)
     group.add_argument('-enu', '--enumeration', type=int,
-                       help='Определение номера карты с помощью хеша. Указать количество процессов')
+                       help='Определение номера карты с помощью хэша. Указать количество процессов')
     args = parser.parse_args()
     if args.settings:
         settings = read_settings(args.settings)
