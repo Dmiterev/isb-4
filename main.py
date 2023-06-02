@@ -24,7 +24,7 @@ def read_settings(file: str) -> dict:
     return json_data
 
 
-def write_in_file(number_file: str, number: str):
+def write_in_file(number_file: str, number: str) -> None:
     """
     Запись номера в файл.
     :param number_file: Путь к файлу.

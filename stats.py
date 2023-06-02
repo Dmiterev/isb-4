@@ -3,14 +3,13 @@ from enumeration import enumerate_number
 import time
 
 
-def visualize_stats(hash: str, bin: str, last_numbers: str, stats_file: str):
+def visualize_stats(hash: str, bin: str, last_numbers: str, stats_file: str) -> None:
     """
     Создание гистограммы статистики для 4 ядер.
     :param hash: Хэш номера.
     :param bin:  БИН номер карты.
     :param last_numbers: Последние 4 цифры карты.
     :param stats_file: Путь к файлу с гистограммой.
-    :return:
     """
     cores = []
     enumerate_time = []

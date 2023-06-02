@@ -1,7 +1,7 @@
 import logging
 
 
-def luhn_check(number_file: str):
+def luhn_check(number_file: str) -> bool:
     """
     Проверка корректности номера с помощью алгоритма Луна.
     :param number_file: Путь к файлу с номером карты.

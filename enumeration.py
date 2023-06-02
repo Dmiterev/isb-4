@@ -1,9 +1,10 @@
 import hashlib
 import multiprocessing as mp
 from tqdm import tqdm
+from typing import Optional, Union
 
 
-def enumerate_number(hash: str, bin: str, last_numbers: str, core_number: int = mp.cpu_count()):
+def enumerate_number(hash: str, bin: str, last_numbers: str, core_number: int = mp.cpu_count()) -> Optional[str]:
     """
     Подбор номера карты c помощью хэша.
     :param hash: Хэш карты.
@@ -22,7 +23,7 @@ def enumerate_number(hash: str, bin: str, last_numbers: str, core_number: int = 
     return None
 
 
-def check_number(hash: str, card_number: str):
+def check_number(hash: str, card_number: str) -> Union[str, bool]:
     """
     Проверка соответствия номера с хэшем.
     :param hash: Хэш карты.
