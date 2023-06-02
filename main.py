@@ -3,6 +3,7 @@ import argparse
 import logging
 import json
 from enumeration import enumerate_number
+from stats import visualize_stats
 
 logger = logging.getLogger()
 logger.setLevel('INFO')
@@ -43,6 +44,7 @@ if __name__ == '__main__':
     group = parser.add_mutually_exclusive_group(required=True)
     group.add_argument('-enu', '--enumeration', type=int,
                        help='Определение номера карты с помощью хэша. Указать количество процессов')
+    group.add_argument('-sts', '--stats', help='Визуализация статистики')
     args = parser.parse_args()
     if args.settings:
         settings = read_settings(args.settings)
@@ -59,3 +61,9 @@ if __name__ == '__main__':
                 write_in_file(settings["card_number"], card_number)
             else:
                 logging.info("Номер карты не найден!")
+        elif args.stats:
+            hash = settings["hash"]
+            bin = settings["bin"]
+            last_numbers = settings["last_numbers"]
+            visualize_stats(hash, bin, last_numbers, settings["stats"])
+            logging.info('Гистограмма построена')
