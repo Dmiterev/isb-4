@@ -25,4 +25,4 @@ def luhn_check(number_file: str) -> bool:
             json.dump(json_data, f)
         logging.info(f'Результат проверки записан в {number_file}!')
     except OSError as err:
-        logging.warning(f'{err} Ошибка при записи номера карты в {number_file}!')
+        logging.warning(f'{err} Ошибка при записи результата проверки в {number_file}!')
