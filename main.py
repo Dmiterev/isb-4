@@ -24,7 +24,7 @@ def read_settings(file: str) -> dict:
     return json_data
 
 
-def write_in_file(number_file: str, number: str) -> None:
+def write_in_json(number_file: str, number: str) -> None:
     """
     Запись номера в файл.
     :param number_file: Путь к файлу.
@@ -32,7 +32,8 @@ def write_in_file(number_file: str, number: str) -> None:
     """
     try:
         with open(number_file, 'w') as f:
-            f.write(number)
+            json_data = {"card_number": number, "luhn_check": 0}
+            json.dump(json_data, f)
         logging.info(f'Номер карты записан в {number_file}!')
     except OSError as err:
         logging.warning(f'{err} Ошибка при записи номера карты в {number_file}!')
@@ -56,15 +57,11 @@ if __name__ == '__main__':
         if args.enumeration:
             card_number = enumerate_number(settings["hash"], settings["bin"], settings["last_numbers"], args.enumeration)
             if card_number:
-                logging.info(f"Полученный номер карты: {card_number}")
-                write_in_file(settings["card_number"], card_number)
+                write_in_json(settings["card_number"], card_number)
             else:
-                logging.info("Номер карты не найден!")
+                logging.error("Номер не найден!")
         elif args.stats:
             visualize_stats(settings["hash"], settings["bin"], settings["last_numbers"], settings["stats"])
             logging.info('Гистограмма построена')
         elif args.luhn_algorithm:
-            if luhn_check(settings["card_number"]):
-                logging.info('Номер карты корректный!')
-            else:
-                logging.info('Номер карты не некорректный!')
+            luhn_check(settings["card_number"])
